@@ -93,6 +93,7 @@ class _TodolistPageState extends State<TodolistPage> {
                 ToDoItem(
                   title: "Verify your Account",
                   subtitle: "4 records found",
+                  status: "Pending",
                   icon: Icons.person,
                   iconColor: AppColors.primary,
                   onTap: () {
@@ -105,6 +106,7 @@ class _TodolistPageState extends State<TodolistPage> {
                 ToDoItem(
                   title: "Fill Emergency Form",
                   subtitle: "4 records found",
+                  status: "Completed",
                   icon: Icons.file_copy,
                   iconColor: AppColors.primary,
                   onTap: () {},
@@ -112,6 +114,7 @@ class _TodolistPageState extends State<TodolistPage> {
                 ToDoItem(
                   title: "Fill Insurance Form",
                   subtitle: "4 records found",
+                  status: "Pending",
                   icon: Icons.assignment_turned_in,
                   iconColor: AppColors.primary,
                   onTap: () {
@@ -124,6 +127,7 @@ class _TodolistPageState extends State<TodolistPage> {
                 ToDoItem(
                   title: "Payment Bill",
                   subtitle: "4 records found",
+                  status: "Pending",
                   icon: Remix.refund_2_line,
                   iconColor: AppColors.primary,
                   onTap: () {
@@ -136,6 +140,7 @@ class _TodolistPageState extends State<TodolistPage> {
                 ToDoItem(
                   title: "Prescription",
                   subtitle: "4 records found",
+                  status: "In Progress",
                   icon: Remix.dossier_line,
                   iconColor: AppColors.primary,
                   onTap: () {
@@ -148,6 +153,7 @@ class _TodolistPageState extends State<TodolistPage> {
                 ToDoItem(
                   title: "Receipt",
                   subtitle: "4 records found",
+                  status: "In Progress",
                   icon: Icons.account_balance_wallet,
                   iconColor: AppColors.primary,
                   onTap: () {},

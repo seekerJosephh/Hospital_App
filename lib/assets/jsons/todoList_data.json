@@ -3,35 +3,36 @@
     "title": "Verify your Account",
     "subtitle": "4 records found",
     "status": "Pending",
-    "icon": "Icons.person",
-    "screen": "EditProfileScreen"
+    "icon": "Icons.person"
   },
   {
     "title": "Fill Emergency Form",
     "subtitle": "4 records found",
-    "status": "Completed",
-    "icon": "Icons.file_copy",
-    "screen": "EmergencyFormScreen"
+    "status": "Completed", 
+    "icon": "Icons.file_copy"
   },
   {
     "title": "Fill Insurance Form",
     "subtitle": "4 records found",
     "status": "Pending",
-    "icon": "Icons.assignment_turned_in",
-    "screen": "InsuranceScreen"
+    "icon": "Icons.assignment_turned_in"
   },
   {
     "title": "Payment Bill",
     "subtitle": "4 records found",
     "status": "Pending",
-    "icon": "Remix.refund_2_line",
-    "screen": "PaymentbillScreen"
+    "icon": "Remix.refund_2_line"
   },
   {
     "title": "Prescription",
     "subtitle": "4 records found",
     "status": "In Progress",
-    "icon": "Remix.dossier_line",
-    "screen": "PrescriptionScreen"
+    "icon": "Remix.dossier_line"
+  },
+  {
+    "title": "Receipt",
+    "subtitle": "4 records found",
+    "status": "In Progress",
+    "icon": "account_balance_wallet"
   }
 ]

@@ -5,7 +5,7 @@ import 'package:hospital/features/auth/views/userinformation_screen.dart';
 void main() {
   testWidgets('Userinformation', (WidgetTester tester) async {
     final mockRoute = '/mockRoute';
-    // Approutes.welcomes =mockRoute;
+    // Approutes.welcomes = mockRoute;
 
     await tester.pumpWidget(
       MaterialApp(
