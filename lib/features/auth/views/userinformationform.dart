@@ -106,7 +106,7 @@ class _UserinformationformState extends State<Userinformationform> {
       label: "Submit",
       // onPressed: _validateLogin,
       onPressed: () {
-        Navigator.pushReplacementNamed(context, Approutes.homes);
+        Navigator.pushReplacementNamed(context, AppRoutes.home);
       },
     );
   }

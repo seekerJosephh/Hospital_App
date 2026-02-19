@@ -28,8 +28,11 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:hospital/features/auth/views/OnboardingScreen.dart';
 import 'package:hospital/features/auth/views/login_screen.dart';
 import 'package:hospital/features/auth/views/lottie_screen.dart';
+import 'package:hospital/features/auth/views/news_screen.dart';
+import 'package:hospital/features/auth/views/signUp_screen.dart';
 import 'package:hospital/features/auth/views/userinformation_screen.dart';
 import 'package:hospital/features/auth/views/welcome_screen.dart';
 import 'package:hospital/pages/history_page.dart';
@@ -38,28 +41,29 @@ import 'package:hospital/pages/profile_page.dart';
 import 'package:hospital/pages/schedule_page.dart';
 import 'package:hospital/pages/todolist_page.dart';
 
-class Approutes {
-  static const String litties = '/litties';
-  static const String logins = '/logins';
-  static const String welcomes = '/welcomes';
-  static const String userinformations = '/userinformations';
-  static const String homes = '/homes';
+class AppRoutes {
+  static const String splash = '/splash';
+  static const String onboarding = '/onboarding';
+  static const String login = '/login';
+  static const String signup = '/signup';
+  static const String home = '/home';
   static const String todos = '/todos';
   static const String schedules = '/schedule';
   static const String historys = '/historys';
   static const String profiles = '/profiles';
+  static const String newscreen = '/newscreen';
 
   static Route? generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case litties:
+      case splash:
         return MaterialPageRoute(builder: (_) => LottieScreen());
-      case welcomes:
-        return MaterialPageRoute(builder: (_) => WelcomeScreen());
-      case logins:
+      case onboarding:
+        return MaterialPageRoute(builder: (_) => OnboardingScreen());
+      case login:
         return MaterialPageRoute(builder: (_) => LoginScreen());
-      case userinformations:
-        return MaterialPageRoute(builder: (_) => UserinformationScreen());
-      case homes:
+      case signup:
+        return MaterialPageRoute(builder: (_) => SignUpScreen());
+      case home:
         return MaterialPageRoute(builder: (_) => HomePage());
       case todos:
         return MaterialPageRoute(builder: (_) => TodolistPage());
@@ -69,80 +73,12 @@ class Approutes {
         return MaterialPageRoute(builder: (_) => HistoryPage());
       case profiles:
         return MaterialPageRoute(builder: (_) => ProfilePage());
+      case newscreen:
+        return MaterialPageRoute(builder: (_) => NewScreen());
       default:
-        return null;
+        return MaterialPageRoute(
+            builder: (_) =>
+                Scaffold(body: Center(child: Text('Page not found'))));
     }
   }
 }
-
-
-// this page is Use for Routes page  
-
-//step 2 
-// import 'package:flutter/material.dart';
-// import 'app_routes.dart';
-
-// void main() {
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter App',
-//       initialRoute: AppRoutes.login, // Start at the login page
-//       onGenerateRoute: AppRoutes.generateRoute, // Use AppRoutes for routing
-//     );
-//   }
-// }
-
-//you can use this    Navigator.pushNamed(context, AppRoutes.home);
-
-
-// import 'package:flutter/material.dart';
-
-// class HomeScreen extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Home Page'),
-//       ),
-//       body: Center(
-//         child: ElevatedButton(
-//           onPressed: () {
-//             Navigator.pushNamed(
-//                 context, '/profile'); // Navigate to Profile page
-//           },
-//           child: Text('Go to Profile'),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-
-//to
-
-// import 'package:flutter/material.dart';
-
-// class ProfileScreen extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Profile Page'),
-//       ),
-//       body: Center(
-//         child: ElevatedButton(
-//           onPressed: () {
-//             Navigator.pushNamed(
-//                 context, '/settings'); // Navigate to Settings page
-//           },
-//           child: Text('Go to Settings'),
-//         ),
-//       ),
-//     );
-//   }
-// }

@@ -20,6 +20,13 @@
       "time": "11:45 AM",
       "doctor": "Dr. Strange",
       "appointmentType": "Childhood Immunisation"
+    },
+     {
+      "date": "2",
+      "day": "Mon",
+      "time": "11:45 AM",
+      "doctor": "Dr. Strange",
+      "appointmentType": "Childhood Immunisation"
     }
   ],
   "historyAppointments": [

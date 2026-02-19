@@ -6,9 +6,14 @@ import 'package:hospital/core/constants/app_size.dart';
 import 'package:hospital/features/auth/models/appointment_model.dart';
 import 'package:hospital/features/auth/models/home_category_model.dart';
 import 'package:hospital/features/auth/views/Diagnostics_screen.dart';
+import 'package:hospital/features/auth/views/PharmacyScreen.dart';
+import 'package:hospital/features/auth/views/PrescriptionScreen.dart';
+import 'package:hospital/features/auth/views/ReportScreen.dart';
+import 'package:hospital/features/auth/views/TopDoctorsScreen.dart';
 import 'package:hospital/features/auth/views/appointment_screen.dart';
 import 'package:hospital/features/auth/views/editProfile_screen.dart';
 import 'package:hospital/features/auth/views/insurance_screen.dart';
+
 import 'package:hospital/pages/todolist_page.dart';
 import 'package:hospital/services/appointment_service.dart';
 import 'package:hospital/services/home_category_service.dart';
@@ -143,62 +148,124 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                // Icon Grid Section
+
                 Container(
-                  height: AppSizes.cardHeight(context),
                   margin: EdgeInsets.symmetric(
                       vertical: AppSizes.paddingSmall(context)),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
                   decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius:
-                        BorderRadius.circular(AppSizes.borderRadius(context)),
+                    color: AppColors
+                        .primary, // Teal background matching healthcare apps
+                    borderRadius: BorderRadius.circular(
+                        AppSizes.borderRadius(context) * 1.2),
                   ),
                   child: GridView.count(
                     crossAxisCount: 4,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    mainAxisSpacing: 5, // Reduced spacing between rows
-                    crossAxisSpacing: 5, // Reduced spacing between columns
+                    mainAxisSpacing: 20, // Vertical spacing between rows
+                    crossAxisSpacing:
+                        12, // Horizontal spacing – balanced, not too tight
+                    childAspectRatio:
+                        0.95, // Slightly taller to fit label comfortably
                     children: [
-                      _buildIconWithLabel(Remix.user_fill, "Account", () {
-                        Navigator.push(
+                      _buildIconTile(
+                        icon: Icons
+                            .medical_services_outlined, // Stethoscope for Diagnostic
+                        label: "Diagnostic",
+                        onTap: () {
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PersonalInfoScreen()));
-                      }),
-                      _buildIconWithLabel(Remix.stethoscope_fill, "Diagnostics",
-                          () {
-                        Navigator.push(
+                                builder: (_) => DiagnosticsServicesScreen()),
+                          );
+                        },
+                      ),
+                      _buildIconTile(
+                        icon: Icons.badge_outlined, // ID card for Insurance
+                        label: "Insurance",
+                        onTap: () {
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    DiagnosticsServicesScreen()));
-                      }),
-                      _buildIconWithLabel(Remix.id_card_line, "Insurance", () {
-                        Navigator.push(
+                                builder: (_) => InsuranceScreen()),
+                          );
+                        },
+                      ),
+                      _buildIconTile(
+                        icon: Icons
+                            .calendar_month_outlined, // Calendar for Appointment
+                        label: "Appointment",
+                        onTap: () {
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => InsuranceScreen()));
-                      }),
-                      _buildIconWithLabel(
-                          Remix.calendar_check_line, "Appointment", () {
-                        Navigator.push(
+                                builder: (_) => AppointmentsScreen()),
+                          );
+                        },
+                      ),
+                      _buildIconTile(
+                        icon: Icons
+                            .person_outline, // or better: Icons.medical_services_outlined
+                        label: "Doctor",
+                        onTap: () {
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AppointmentsScreen()));
-                      }),
-                      _buildIconWithLabel(
-                          Icons.receipt_long_outlined, "History", () {}),
-                      _buildIconWithLabel(
-                          Icons.payments_outlined, "Bil lPayments", () {}),
-                      _buildIconWithLabel(
-                          Remix.dossier_line, "Prescriptions", () {}),
-                      _buildIconWithLabel(
-                          Icons.receipt_outlined, "Receipt", () {}),
+                              builder: (_) => TopDoctorsScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                      _buildIconTile(
+                        icon: Icons
+                            .description_outlined, // Clipboard/report for Report
+                        label: "Report",
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => ReportScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                      _buildIconTile(
+                        icon: Icons.payments_outlined, // Money/bill for Payment
+                        label: "Payment",
+                        onTap: () {
+                          // TODO: Navigate to Payment/Bill page
+                        },
+                      ),
+                      _buildIconTile(
+                        icon: Icons
+                            .medical_information_outlined, // Prescription/clipboard+
+                        label: "Prescription",
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => PrescriptionScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                      _buildIconTile(
+                        icon: Icons.local_pharmacy_outlined, // Pill/pharmacy
+                        label: "Pharmacy",
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => PharmacyScreen(),
+                            ),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),
-
                 // Categories Section
                 if (selectedIndex == 0)
                   Row(
@@ -213,7 +280,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         "See all",
                         style: TextStyle(
-                            fontWeight: FontWeight.w500,
                             fontSize: AppFonts.getHeadingTwo(context),
                             color: AppColors.primary),
                       ),
@@ -277,8 +343,47 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-  // Func Test
 
+  // Func Test
+  Widget _buildIconTile({
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 60,
+            height: 60,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            ),
+            alignment: Alignment.center,
+            child: Icon(icon,
+                size: 35, // Slightly larger icon for visibility
+                color: AppColors.primary // Teal icon color
+                ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              height: 1.2,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
   // For Category Card
 
   Widget _categoryCard(String title, String subtitle,

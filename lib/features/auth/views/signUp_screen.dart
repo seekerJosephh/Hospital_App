@@ -1,27 +1,22 @@
+// lib/features/auth/views/signup_screen.dart
 import 'package:flutter/material.dart';
-import 'package:hospital/routes/AppRoutes.dart'; // adjust import
-// import 'package:hospital/widgets/custom_button.dart'; // if you want to keep it
+import 'package:hospital/routes/AppRoutes.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   bool _obscurePassword = true;
+  bool _agreeTerms = false;
   bool _isLoading = false;
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,24 +27,12 @@ class _LoginScreenState extends State<LoginScreen> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black87),
-          onPressed: () {
-            print("Current route: ${ModalRoute.of(context)?.settings.name}");
-            print("Can pop? ${Navigator.canPop(context)}");
-            if (Navigator.canPop(context)) {
-              Navigator.pop(context);
-            } else {
-              // Optional: exit app or go to home
-              // SystemNavigator.pop(); // only on Android
-            }
-          },
+          onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
-          "Sign In",
+          "Sign Up",
           style: TextStyle(
-            color: Colors.black87,
-            fontSize: 22,
-            fontWeight: FontWeight.w600,
-          ),
+              color: Colors.black87, fontSize: 22, fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
       ),
@@ -61,7 +44,16 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               const SizedBox(height: 20),
 
-              // Email field
+              // Full name
+              _buildTextField(
+                controller: _nameController,
+                hint: "Enter your name",
+                icon: Icons.person_outline,
+              ),
+
+              const SizedBox(height: 20),
+
+              // Email
               _buildTextField(
                 controller: _emailController,
                 hint: "Enter your email",
@@ -71,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
               const SizedBox(height: 20),
 
-              // Password field
+              // Password
               _buildTextField(
                 controller: _passwordController,
                 hint: "Enter your password",
@@ -87,37 +79,52 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
 
-              const SizedBox(height: 12),
+              const SizedBox(height: 24),
 
-              // Forgot password
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {
-                    // TODO: forgot password screen or dialog
-                  },
-                  child: const Text(
-                    "Forgot password?",
-                    style: TextStyle(
-                      color: Color(0xFF26A69A), // teal
-                      fontWeight: FontWeight.w500,
+              // Terms checkbox
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 24,
+                    width: 24,
+                    child: Checkbox(
+                      value: _agreeTerms,
+                      activeColor: const Color(0xFF26A69A),
+                      onChanged: (val) =>
+                          setState(() => _agreeTerms = val ?? false),
                     ),
                   ),
-                ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: RichText(
+                      text: TextSpan(
+                        style: TextStyle(color: Colors.grey[700], fontSize: 14),
+                        children: const [
+                          TextSpan(text: "I agree to the healthcare "),
+                          TextSpan(
+                            text: "Terms of Service and Privacy Policy",
+                            style: TextStyle(color: Color(0xFF26A69A)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
 
-              const SizedBox(height: 32),
+              const SizedBox(height: 40),
 
-              // Sign In button
+              // Sign Up button
               SizedBox(
                 width: double.infinity,
                 height: 54,
                 child: ElevatedButton(
-                  onPressed: _isLoading
+                  onPressed: _isLoading || !_agreeTerms
                       ? null
                       : () {
                           setState(() => _isLoading = true);
-                          // TODO: call login API / validate
+                          // TODO: call register API
                           Future.delayed(const Duration(seconds: 2), () {
                             setState(() => _isLoading = false);
                             Navigator.pushReplacementNamed(
@@ -138,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Colors.white, strokeWidth: 2.5),
                         )
                       : const Text(
-                          "Sign In",
+                          "Sign Up",
                           style: TextStyle(
                               fontSize: 17,
                               color: Colors.white,
@@ -149,53 +156,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
               const SizedBox(height: 40),
 
-              // OR divider
-              Row(
-                children: const [
-                  Expanded(child: Divider(color: Colors.grey)),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text("OR", style: TextStyle(color: Colors.grey)),
-                  ),
-                  Expanded(child: Divider(color: Colors.grey)),
-                ],
-              ),
-
-              const SizedBox(height: 32),
-
-              // Social buttons
-              _buildSocialButton(
-                text: "Sign in with Google",
-                icon: Icons.g_mobiledata_rounded,
-                color: Colors.red,
-                bgColor: Colors.white,
-                border: true,
-              ),
-              const SizedBox(height: 16),
-              _buildSocialButton(
-                text: "Sign in with Facebook",
-                icon: Icons.facebook,
-                color: const Color(0xFF1877F2),
-                bgColor: Colors.white,
-                border: true,
-              ),
-
-              const SizedBox(height: 40),
-
-              // Don't have account → Sign up
               Center(
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "Don't have an account? ",
+                      "Already have an account? ",
                       style: TextStyle(color: Colors.grey[700]),
                     ),
                     GestureDetector(
                       onTap: () =>
-                          Navigator.pushNamed(context, AppRoutes.signup),
+                          Navigator.pushNamed(context, AppRoutes.login),
                       child: const Text(
-                        "Sign up",
+                        "Sign in",
                         style: TextStyle(
                           color: Color(0xFF26A69A),
                           fontWeight: FontWeight.w600,
@@ -243,41 +216,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         suffixIcon: suffixIcon,
         contentPadding: const EdgeInsets.symmetric(vertical: 16),
-      ),
-    );
-  }
-
-  Widget _buildSocialButton({
-    required String text,
-    required IconData icon,
-    required Color color,
-    required Color bgColor,
-    bool border = false,
-  }) {
-    return SizedBox(
-      width: double.infinity,
-      height: 52,
-      child: OutlinedButton.icon(
-        onPressed: () {
-          // TODO: Google / Facebook sign-in
-        },
-        icon: Icon(icon, color: color, size: 28),
-        label: Text(
-          text,
-          style: TextStyle(
-            color: Colors.black87,
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        style: OutlinedButton.styleFrom(
-          backgroundColor: bgColor,
-          side: border
-              ? BorderSide(color: Colors.grey.shade300)
-              : BorderSide.none,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        ),
       ),
     );
   }
